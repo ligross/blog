@@ -3,6 +3,11 @@ extends layout
 block content
   h1= title
   p Welcome to #{title}
-  ul
-    - for (var post in posts)
-      li= post
+  if(typeof(posts) !== 'undefined')
+    each post in posts
+      div.post
+        div.title
+          a(href="/posts/view/"+post._id)!= post.title
+        div.body= post.body
+
+  a(href="/posts/create") Create post
