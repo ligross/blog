@@ -1,13 +1,12 @@
 extends layout
 
 block content
-
    form(action='/posts', role='form', method='post')
       label(for="postTitle") Post Title
       .col-sm-4
          input(type="text", required, id="postTitle", name="title")
       label(for="postBody", class="col-sm-2 control-label") Post Body
       .col-sm-4
-         input(type="text", required, id="postBody", name="body")
+         textarea(data-provide="markdown", rows="10", required, id="postBody", name="body")
       .col-sm-offset-2.col-sm-4
          button(type="submit", class="btn btn-default") Create Post
