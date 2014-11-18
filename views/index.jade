@@ -7,6 +7,6 @@ block content
     each post in posts
       div.post
         div.title
-          a(href="/view/"+post._id)!= post.title
+          a(href="/"+post._id)!= post.title
 
   a(href="/create") Create post

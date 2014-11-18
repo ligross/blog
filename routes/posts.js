@@ -19,6 +19,23 @@ router.get('/', function (req, res) {
     })
 });
 
+router.get('/create', function (req, res) {
+    return res.render('create_post');
+});
+
+/* Read a post */
+router.get('/:id/', function (req, res) {
+    return PostsModel.findById(req.params.id, function (err, post) {
+        if (err) {
+            //TODO logging
+            res.statusCode = 500;
+            return res.send('Server error');
+        } else {
+            return res.render('view_post', {post: post});
+        }
+    })
+});
+
 /* Create a post */
 router.post('/', function (req, res) {
     var post = new PostsModel({title: req.body.title, body: req.body.body});
@@ -31,19 +48,6 @@ router.post('/', function (req, res) {
             return res.redirect(303, '/');
         }
     });
-});
-
-/* Read a post */
-router.get('/view/:id', function (req, res) {
-    return PostsModel.findById(req.params.id, function (err, post) {
-        if (err) {
-            //TODO logging
-            res.statusCode = 500;
-            return res.send('Server error');
-        } else {
-            return res.render('view_post', {post: post});
-        }
-    })
 });
 
 /* Update a post */
@@ -70,10 +74,6 @@ router.delete('/:id', function (req, res) {
             return res.redirect(303, '/');
         }
     })
-});
-
-router.get('/create', function (req, res) {
-        return res.render('create_post');
 });
 
 module.exports = router;
