@@ -1,11 +1,12 @@
 extends layout
 
 block content
+  h1= title
+  p Hi, #{userName}
   if(typeof(posts) !== 'undefined')
     each post in posts
       div.post
         div.title
           a(href="/view/"+post._id)!= post.title
-        div.body= post.body
 
   a(href="/create") Create post

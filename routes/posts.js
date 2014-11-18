@@ -11,7 +11,10 @@ router.get('/', function (req, res) {
             res.statusCode = 500;
             return res.send('Server error');
         } else {
-            return res.render('index', {posts: posts});
+            return res.render('index', {
+                posts: posts,
+                userName: 'User'
+            });
         }
     })
 });
@@ -25,7 +28,7 @@ router.post('/', function (req, res) {
             res.statusCode = 500;
             return res.send('Server error');
         } else {
-            return res.redirect(303, '/posts');
+            return res.redirect(303, '/');
         }
     });
 });
@@ -45,12 +48,28 @@ router.get('/view/:id', function (req, res) {
 
 /* Update a post */
 router.put('/:id', function (req, res) {
-    res.send('The power to update The Post');
+    PostsModel.findByIdAndUpdate(req.params.id, { $set: { body: 'ololo' }}, function (err, post){
+        if (err) {
+            //TODO logging
+            res.statusCode = 500;
+            return res.send('Server error');
+        } else {
+            res.send(post);
+        }
+    })
 });
 
 /* Delete a post */
 router.delete('/:id', function (req, res) {
-    res.send('Delete it just for fun');
+    return PostsModel.findByIdAndRemove(req.params.id, function (err) {
+        if (err) {
+            //TODO logging
+            res.statusCode = 500;
+            return res.send('Server error');
+        } else {
+            return res.redirect(303, '/');
+        }
+    })
 });
 
 router.get('/create', function (req, res) {
